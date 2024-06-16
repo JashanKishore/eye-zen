@@ -8,17 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var timerManager = TimerManager()
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Spacer()
+            Button(action: {
+                if timerManager.isRunning {
+                    timerManager.stopTimer()
+                } else {
+                    timerManager.startTimer()
+                }
+            }) {
+                Text(timerManager.isRunning ? "Pause" : "Play")
+                    .font(.largeTitle)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            Spacer()
         }
-        .padding()
+        .onAppear {
+            UNUserNotificationCenter.current().getNotificationSettings { settings in
+                if settings.authorizationStatus != .authorized {
+                    print("Notifications not allowed")
+                }
+            }
+        }
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }

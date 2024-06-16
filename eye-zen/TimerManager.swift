@@ -11,7 +11,7 @@ import UserNotifications
 class TimerManager: ObservableObject {
     @Published var isRunning = false
     private var timer: Timer?
-    private var timeInterval: TimeInterval = 20 * 60  // 20 minutes in seconds
+    private var timeInterval: TimeInterval = 20 //* 60  // 20 minutes in seconds
 
     func startTimer() {
         isRunning = true
