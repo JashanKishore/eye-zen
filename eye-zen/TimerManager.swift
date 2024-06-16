@@ -10,15 +10,21 @@ import UserNotifications
 
 class TimerManager: ObservableObject {
     @Published var isRunning = false
+    @Published var remainingTime: TimeInterval = 10 // testing
     private var timer: Timer?
-    private var timeInterval: TimeInterval = 20 //* 60  // 20 minutes in seconds
+    private var totalTime: TimeInterval = 10 // testing
 
     func startTimer() {
         isRunning = true
+        remainingTime = totalTime
         scheduleNotification()
-        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { _ in
-            self.sendNotification()
-            self.stopTimer()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            if self.remainingTime > 0 {
+                self.remainingTime -= 1
+            } else {
+                self.sendNotification()
+                self.stopTimer()
+            }
         }
     }
 
@@ -26,6 +32,7 @@ class TimerManager: ObservableObject {
         isRunning = false
         timer?.invalidate()
         timer = nil
+        remainingTime = totalTime
     }
 
     private func scheduleNotification() {
@@ -34,7 +41,7 @@ class TimerManager: ObservableObject {
         content.body = "It's time to take a break from the screen!"
         content.sound = UNNotificationSound.default
 
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: totalTime, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request)
@@ -50,4 +57,5 @@ class TimerManager: ObservableObject {
         UNUserNotificationCenter.current().add(request)
     }
 }
+
 

@@ -13,6 +13,9 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Spacer()
+            Text(timeString(time: timerManager.remainingTime))
+                .font(.largeTitle)
+                .padding()
             Button(action: {
                 if timerManager.isRunning {
                     timerManager.stopTimer()
@@ -36,6 +39,12 @@ struct ContentView: View {
                 }
             }
         }
+    }
+
+    private func timeString(time: TimeInterval) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
 
