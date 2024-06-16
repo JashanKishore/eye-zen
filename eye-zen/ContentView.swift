@@ -20,7 +20,7 @@ struct ContentView: View {
                     timerManager.startTimer()
                 }
             }) {
-                Text(timerManager.isRunning ? "Pause" : "Play")
+                Text(timerManager.isRunning ? "Stop" : "Start")
                     .font(.largeTitle)
                     .padding()
                     .background(Color.blue)
