@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct ContentView: View {
     @StateObject private var timerManager = TimerManager()
 
@@ -39,22 +41,23 @@ struct ContentView: View {
                         .cornerRadius(10)
                 }
                 
-                if timerManager.isPaused {
-                    Button(action: {
-                        withAnimation {
-                            timerManager.stopTimer()
-                        }
-                    }) {
-                        Text("End")
-                            .font(.title)
-                            .padding()
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                Button(action: {
+                    withAnimation {
+                        timerManager.stopTimer()
                     }
-                    .transition(.opacity)
+                }) {
+                    Text("End")
+                        .font(.title)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
+                .opacity(timerManager.isPaused ? 1 : 0)
+                .disabled(!timerManager.isPaused)
             }
+            .frame(height: 100) // Reserve space for both buttons
+            .animation(.easeInOut, value: timerManager.isPaused)
             
             Spacer()
         }
