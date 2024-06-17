@@ -18,17 +18,34 @@ struct ContentView: View {
                 .padding()
             Button(action: {
                 if timerManager.isRunning {
-                    timerManager.stopTimer()
+                    if timerManager.isPaused {
+                        timerManager.resumeTimer()
+                    } else {
+                        timerManager.pauseTimer()
+                    }
                 } else {
                     timerManager.startTimer()
                 }
             }) {
-                Text(timerManager.isRunning ? "Stop" : "Start")
+                Text(timerManager.isRunning ? (timerManager.isPaused ? "Resume" : "Pause") : "Start")
                     .font(.largeTitle)
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+            }
+            if timerManager.isPaused {
+                Button(action: {
+                    timerManager.stopTimer()
+                }) {
+                    Text("End")
+                        .font(.title)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.top, 10)
+                }
             }
             Spacer()
         }
@@ -53,3 +70,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+

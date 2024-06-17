@@ -10,13 +10,17 @@ import UserNotifications
 
 class TimerManager: ObservableObject {
     @Published var isRunning = false
+    @Published var isPaused = false
     @Published var remainingTime: TimeInterval = 10 // testing
     private var timer: Timer?
     private var totalTime: TimeInterval = 10 // testing
 
     func startTimer() {
         isRunning = true
-        remainingTime = totalTime
+        isPaused = false
+        if remainingTime == 0 {
+            remainingTime = totalTime
+        }
         scheduleNotification()
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if self.remainingTime > 0 {
@@ -26,6 +30,17 @@ class TimerManager: ObservableObject {
                 self.stopTimer()
             }
         }
+    }
+    
+    func pauseTimer() {
+            isPaused = true
+            timer?.invalidate()
+            timer = nil
+    }
+
+    func resumeTimer() {
+        isPaused = false
+        startTimer()
     }
 
     func stopTimer() {
