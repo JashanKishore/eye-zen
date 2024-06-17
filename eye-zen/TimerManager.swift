@@ -45,6 +45,7 @@ class TimerManager: ObservableObject {
 
     func stopTimer() {
         isRunning = false
+        isPaused = false
         timer?.invalidate()
         timer = nil
         remainingTime = totalTime

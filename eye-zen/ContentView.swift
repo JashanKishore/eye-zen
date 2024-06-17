@@ -16,37 +16,46 @@ struct ContentView: View {
             Text(timeString(time: timerManager.remainingTime))
                 .font(.largeTitle)
                 .padding()
-            Button(action: {
-                if timerManager.isRunning {
-                    if timerManager.isPaused {
-                        timerManager.resumeTimer()
-                    } else {
-                        timerManager.pauseTimer()
-                    }
-                } else {
-                    timerManager.startTimer()
-                }
-            }) {
-                Text(timerManager.isRunning ? (timerManager.isPaused ? "Resume" : "Pause") : "Start")
-                    .font(.largeTitle)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            if timerManager.isPaused {
+            
+            VStack(spacing: 10) {
                 Button(action: {
-                    timerManager.stopTimer()
+                    withAnimation {
+                        if timerManager.isRunning {
+                            if timerManager.isPaused {
+                                timerManager.resumeTimer()
+                            } else {
+                                timerManager.pauseTimer()
+                            }
+                        } else {
+                            timerManager.startTimer()
+                        }
+                    }
                 }) {
-                    Text("End")
-                        .font(.title)
+                    Text(timerManager.isRunning ? (timerManager.isPaused ? "Resume" : "Pause") : "Start")
+                        .font(.largeTitle)
                         .padding()
-                        .background(Color.red)
+                        .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(10)
-                        .padding(.top, 10)
+                }
+                
+                if timerManager.isPaused {
+                    Button(action: {
+                        withAnimation {
+                            timerManager.stopTimer()
+                        }
+                    }) {
+                        Text("End")
+                            .font(.title)
+                            .padding()
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .transition(.opacity)
                 }
             }
+            
             Spacer()
         }
         .onAppear {
@@ -70,4 +79,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
