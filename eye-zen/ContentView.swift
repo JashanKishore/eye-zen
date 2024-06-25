@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var timerManager = TimerManager()
     @State private var showAlert = false
+    @State private var showSettings = false
 
     var body: some View {
         ZStack {
@@ -62,6 +63,19 @@ struct ContentView: View {
                 Spacer()
             }
             .padding(.horizontal, 40)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showSettings = true
+                    }) {
+                        Image(systemName: "gear")
+                            .font(.title)
+                    }
+                }
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
+            }
 
             if showAlert {
                 Color.black.opacity(0.4)

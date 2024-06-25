@@ -13,6 +13,7 @@
 		181BF8C62C1EC2F200450DA9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 181BF8C52C1EC2F200450DA9 /* Preview Assets.xcassets */; };
 		181BF8CD2C1EC5E300450DA9 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF8CC2C1EC5E300450DA9 /* TimerManager.swift */; };
 		181BF8CF2C2ADF9C00450DA9 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF8CE2C2ADF9C00450DA9 /* CustomAlertView.swift */; };
+		181BF8D32C2AE49A00450DA9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF8D22C2AE49A00450DA9 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		181BF8C52C1EC2F200450DA9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		181BF8CC2C1EC5E300450DA9 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		181BF8CE2C2ADF9C00450DA9 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
+		181BF8D22C2AE49A00450DA9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			children = (
 				181BF8BE2C1EC2F000450DA9 /* eye_zenApp.swift */,
 				181BF8C02C1EC2F000450DA9 /* ContentView.swift */,
+				181BF8D22C2AE49A00450DA9 /* SettingsView.swift */,
 				181BF8CC2C1EC5E300450DA9 /* TimerManager.swift */,
 				181BF8C22C1EC2F200450DA9 /* Assets.xcassets */,
 				181BF8C42C1EC2F200450DA9 /* Preview Content */,
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				181BF8D32C2AE49A00450DA9 /* SettingsView.swift in Sources */,
 				181BF8CD2C1EC5E300450DA9 /* TimerManager.swift in Sources */,
 				181BF8C12C1EC2F000450DA9 /* ContentView.swift in Sources */,
 				181BF8CF2C2ADF9C00450DA9 /* CustomAlertView.swift in Sources */,
