@@ -7,59 +7,77 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ContentView: View {
     @StateObject private var timerManager = TimerManager()
+    @State private var showAlert = false
 
     var body: some View {
-        VStack {
-            Spacer()
-            Text(timeString(time: timerManager.remainingTime))
-                .font(.largeTitle)
-                .padding()
-            
-            VStack(spacing: 10) {
-                Button(action: {
-                    withAnimation {
-                        if timerManager.isRunning {
-                            if timerManager.isPaused {
-                                timerManager.resumeTimer()
+        ZStack {
+            VStack {
+                Spacer()
+                Text(timeString(time: timerManager.remainingTime))
+                    .font(.largeTitle)
+                    .padding(.bottom, 50)
+
+                VStack(spacing: 20) {
+                    Button(action: {
+                        withAnimation {
+                            if timerManager.isRunning {
+                                if timerManager.isPaused {
+                                    timerManager.resumeTimer()
+                                } else {
+                                    timerManager.pauseTimer()
+                                }
                             } else {
-                                timerManager.pauseTimer()
+                                timerManager.startTimer()
                             }
-                        } else {
-                            timerManager.startTimer()
                         }
+                    }) {
+                        Text(timerManager.isRunning ? (timerManager.isPaused ? "Resume" : "Pause") : "Start")
+                            .font(.largeTitle)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                }) {
-                    Text(timerManager.isRunning ? (timerManager.isPaused ? "Resume" : "Pause") : "Start")
-                        .font(.largeTitle)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+
+                    Button(action: {
+                        withAnimation {
+                            showAlert = true
+                        }
+                    }) {
+                        Text("End")
+                            .font(.title)
+                            .padding()
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .opacity(timerManager.isPaused ? 1 : 0)
+                    .disabled(!timerManager.isPaused)
                 }
-                
-                Button(action: {
-                    withAnimation {
+                .frame(height: 100)
+                .animation(.easeInOut, value: timerManager.isPaused)
+
+                Spacer()
+            }
+            .padding(.horizontal, 40)
+
+            if showAlert {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                    .transition(.opacity)
+
+                CustomAlertView(
+                    showAlert: $showAlert,
+                    title: "End Timer",
+                    message: "Are you sure you want to end the timer?",
+                    onConfirm: {
                         timerManager.stopTimer()
                     }
-                }) {
-                    Text("End")
-                        .font(.title)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .opacity(timerManager.isPaused ? 1 : 0)
-                .disabled(!timerManager.isPaused)
+                )
+                .transition(.scale)
             }
-            .frame(height: 100) // Reserve space for both buttons
-            .animation(.easeInOut, value: timerManager.isPaused)
-            
-            Spacer()
         }
         .onAppear {
             UNUserNotificationCenter.current().getNotificationSettings { settings in
@@ -82,3 +100,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
