@@ -10,93 +10,90 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var timerManager = TimerManager()
     @State private var showAlert = false
-    @State private var showSettings = false
 
     var body: some View {
-        ZStack {
-            VStack {
-                Spacer()
-                Text(timeString(time: timerManager.remainingTime))
-                    .font(.largeTitle)
-                    .padding(.bottom, 50)
+        NavigationStack {
+            ZStack {
+                VStack {
+                    Spacer()
+                    Text(timeString(time: timerManager.remainingTime))
+                        .font(.largeTitle)
+                        .padding(.bottom, 50)
 
-                VStack(spacing: 20) {
-                    Button(action: {
-                        withAnimation {
-                            if timerManager.isRunning {
-                                if timerManager.isPaused {
-                                    timerManager.resumeTimer()
+                    VStack(spacing: 20) {
+                        Button(action: {
+                            withAnimation {
+                                if timerManager.isRunning {
+                                    if timerManager.isPaused {
+                                        timerManager.resumeTimer()
+                                    } else {
+                                        timerManager.pauseTimer()
+                                    }
                                 } else {
-                                    timerManager.pauseTimer()
+                                    timerManager.startTimer()
                                 }
-                            } else {
-                                timerManager.startTimer()
                             }
+                        }) {
+                            Text(timerManager.isRunning ? (timerManager.isPaused ? "Resume" : "Pause") : "Start")
+                                .font(.largeTitle)
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                         }
-                    }) {
-                        Text(timerManager.isRunning ? (timerManager.isPaused ? "Resume" : "Pause") : "Start")
-                            .font(.largeTitle)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
 
-                    Button(action: {
-                        withAnimation {
-                            showAlert = true
+                        Button(action: {
+                            withAnimation {
+                                showAlert = true
+                            }
+                        }) {
+                            Text("End")
+                                .font(.title)
+                                .padding()
+                                .background(Color.red)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                         }
-                    }) {
-                        Text("End")
-                            .font(.title)
-                            .padding()
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        .opacity(timerManager.isPaused ? 1 : 0)
+                        .disabled(!timerManager.isPaused)
                     }
-                    .opacity(timerManager.isPaused ? 1 : 0)
-                    .disabled(!timerManager.isPaused)
+                    .frame(height: 100)
+                    .animation(.easeInOut, value: timerManager.isPaused)
+
+                    Spacer()
                 }
-                .frame(height: 100)
-                .animation(.easeInOut, value: timerManager.isPaused)
-
-                Spacer()
-            }
-            .padding(.horizontal, 40)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showSettings = true
-                    }) {
-                        Image(systemName: "gear")
-                            .font(.title)
+                .padding(.horizontal, 40)
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: SettingsView()) {
+                            Image(systemName: "gearshape")
+                                .font(.title3)
+                        }
                     }
                 }
-            }
-            .sheet(isPresented: $showSettings) {
-                SettingsView()
-            }
 
-            if showAlert {
-                Color.black.opacity(0.4)
-                    .edgesIgnoringSafeArea(.all)
-                    .transition(.opacity)
+                if showAlert {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                        .transition(.opacity)
 
-                CustomAlertView(
-                    showAlert: $showAlert,
-                    title: "End Timer",
-                    message: "Are you sure you want to end the timer?",
-                    onConfirm: {
-                        timerManager.stopTimer()
+                    CustomAlertView(
+                        showAlert: $showAlert,
+                        title: "End Timer",
+                        message: "Are you sure you want to end the timer?",
+                        onConfirm: {
+                            timerManager.stopTimer()
+                        }
+                    )
+                    .transition(.scale)
+                }
+            }
+            
+            .onAppear {
+                UNUserNotificationCenter.current().getNotificationSettings { settings in
+                    if settings.authorizationStatus != .authorized {
+                        print("Notifications not allowed")
                     }
-                )
-                .transition(.scale)
-            }
-        }
-        .onAppear {
-            UNUserNotificationCenter.current().getNotificationSettings { settings in
-                if settings.authorizationStatus != .authorized {
-                    print("Notifications not allowed")
                 }
             }
         }
