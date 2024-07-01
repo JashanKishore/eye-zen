@@ -11,10 +11,16 @@ import UserNotifications
 class TimerManager: ObservableObject {
     @Published var isRunning = false
     @Published var isPaused = false
-    @Published var remainingTime: TimeInterval = 10 // testing
+    @Published var remainingTime: TimeInterval = 0
     @Published var progress: CGFloat = 0.0 // Added for circular progress bar
     private var timer: Timer?
-    private var totalTime: TimeInterval = 10 // testing
+    private var totalTime: TimeInterval {
+        return UserDefaults.standard.double(forKey: "notificationInterval") * 60
+    }
+    
+    init() {
+            remainingTime = totalTime
+        }
 
     func startTimer() {
         isRunning = true
