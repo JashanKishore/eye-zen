@@ -22,7 +22,7 @@ struct CircularProgressView: View {
                 .trim(from: 0.0, to: progress)
                 .stroke(circleColor, lineWidth: lineWidth)
                 .rotationEffect(.degrees(-90))
-                .animation(.linear)
+                .animation(.linear, value: progress)  // Updated animation modifier
         }
     }
 }

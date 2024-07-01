@@ -10,15 +10,22 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var timerManager = TimerManager()
     @State private var showAlert = false
+    @AppStorage("useCircularCountdown") private var useCircularCountdown = false
 
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
                     Spacer()
-                    Text(timeString(time: timerManager.remainingTime))
-                        .font(.largeTitle)
-                        .padding(.bottom, 50)
+                    if useCircularCountdown {
+                        CircularProgressView(progress: timerManager.progress)
+                            .frame(width: 150, height: 150)
+                            .padding(.bottom, 50)
+                    } else {
+                        Text(timeString(time: timerManager.remainingTime))
+                            .font(.largeTitle)
+                            .padding(.bottom, 50)
+                    }
 
                     VStack(spacing: 20) {
                         Button(action: {
