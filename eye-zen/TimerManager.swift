@@ -12,6 +12,7 @@ class TimerManager: ObservableObject {
     @Published var isRunning = false
     @Published var isPaused = false
     @Published var remainingTime: TimeInterval = 10 // testing
+    @Published var progress: CGFloat = 0.0 // Added for circular progress bar
     private var timer: Timer?
     private var totalTime: TimeInterval = 10 // testing
 
@@ -25,6 +26,7 @@ class TimerManager: ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if self.remainingTime > 0 {
                 self.remainingTime -= 1
+                self.updateProgress()
             } else {
                 self.sendNotification()
                 self.stopTimer()
@@ -49,6 +51,11 @@ class TimerManager: ObservableObject {
         timer?.invalidate()
         timer = nil
         remainingTime = totalTime
+        progress = 0.0 // Reset progress
+    }
+    
+    func updateProgress() {
+        progress = CGFloat(remainingTime) / CGFloat(totalTime)
     }
 
     private func scheduleNotification() {
