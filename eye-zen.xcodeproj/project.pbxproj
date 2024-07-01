@@ -14,6 +14,7 @@
 		181BF8CD2C1EC5E300450DA9 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF8CC2C1EC5E300450DA9 /* TimerManager.swift */; };
 		181BF8CF2C2ADF9C00450DA9 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF8CE2C2ADF9C00450DA9 /* CustomAlertView.swift */; };
 		181BF8D32C2AE49A00450DA9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF8D22C2AE49A00450DA9 /* SettingsView.swift */; };
+		181BF8D52C32767100450DA9 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF8D42C32767100450DA9 /* CircularProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		181BF8CC2C1EC5E300450DA9 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		181BF8CE2C2ADF9C00450DA9 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
 		181BF8D22C2AE49A00450DA9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		181BF8D42C32767100450DA9 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			children = (
 				181BF8BE2C1EC2F000450DA9 /* eye_zenApp.swift */,
 				181BF8C02C1EC2F000450DA9 /* ContentView.swift */,
+				181BF8D42C32767100450DA9 /* CircularProgressView.swift */,
 				181BF8D22C2AE49A00450DA9 /* SettingsView.swift */,
 				181BF8CC2C1EC5E300450DA9 /* TimerManager.swift */,
 				181BF8C22C1EC2F200450DA9 /* Assets.xcassets */,
@@ -150,6 +153,7 @@
 				181BF8CD2C1EC5E300450DA9 /* TimerManager.swift in Sources */,
 				181BF8C12C1EC2F000450DA9 /* ContentView.swift in Sources */,
 				181BF8CF2C2ADF9C00450DA9 /* CustomAlertView.swift in Sources */,
+				181BF8D52C32767100450DA9 /* CircularProgressView.swift in Sources */,
 				181BF8BF2C1EC2F000450DA9 /* eye_zenApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
