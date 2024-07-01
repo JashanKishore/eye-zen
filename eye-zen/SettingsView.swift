@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
-    
+    @AppStorage("useCircularCountdown") private var useCircularCountdown = false
     @State private var notificationInterval: Double = 20 // in minutes
 
     var body: some View {
@@ -23,6 +23,11 @@ struct SettingsView: View {
                         }
                         .padding()
                         Text("\(Int(notificationInterval)) minutes")
+                    }
+                }
+                Section(header: Text("Countdown Style")) {
+                    Toggle(isOn: $useCircularCountdown) {
+                        Text("Use Circular Countdown")
                     }
                 }
             }
